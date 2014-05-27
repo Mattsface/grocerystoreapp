@@ -20,13 +20,25 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :items %><br>
-    <%= f.number_field :items %>
+    <%= f.label :number_of_items %><br>
+    <%= f.number_field :number_of_items %>
   </div>
   <div class="field">
     <%= f.label :price %><br>
     <%= f.text_field :price %>
   </div>
+  <p><h1> Item Fields </h1>
+  <%= f.fields_for :items, Item.new do |i| %>
+    <div class="field">
+      <%= i.label :name %><br>
+      <%= i.text_field :name %>
+
+      <% if i.object.persisted? %>
+      <%= i.check_box :_destroy %>
+      <%= i.label :_destroy, "Destroy" %>
+    <% end %>
+    </div>
+  <% end %></p>
   <div class="actions">
     <%= f.submit %>
   </div>
