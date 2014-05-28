@@ -4,6 +4,23 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
+  require 'rest_client'
+  require 'json'
+
+  response = RestClient.get "https://mailtrap.io/api/v1/inboxes?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+
+  first_inbox = JSON.parse(response)[0] # get first inbox
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+  :user_name => first_inbox['username'],
+  :password => first_inbox['password'],
+  :address => first_inbox['domain'],
+  :domain => first_inbox['domain'],
+  :port => first_inbox['smtp_ports'][0],
+  :authentication => :plain
+  }
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
