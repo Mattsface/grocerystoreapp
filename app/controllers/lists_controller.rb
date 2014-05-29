@@ -31,6 +31,7 @@ class ListsController < ApplicationController
       if @list.save
         format.html { redirect_to @list, notice: 'List was successfully created.' }
         format.json { render :show, status: :created, location: @list }
+        ListMailer.new_list(@list, current_user.email).deliver
       else
         format.html { render :new }
         format.json { render json: @list.errors, status: :unprocessable_entity }
