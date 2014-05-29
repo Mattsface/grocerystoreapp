@@ -12,6 +12,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'devise'
 
+gem 'rest-client'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'capybara'
@@ -21,6 +23,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem'rest-client'
 end
 
 
