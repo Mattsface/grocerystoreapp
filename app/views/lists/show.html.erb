@@ -12,12 +12,12 @@
 
 <p>
   <strong>Number of items:</strong>
-  <%= find_number_of_items %>
+  <%= find_number_of_items(@list) %>
 </p>
 
 <p>
   <strong>Price:</strong>
-  <%= find_total_price %>
+  <%= sprintf('%.2f', find_total_price(@list)) %>
 </p>
 
 
