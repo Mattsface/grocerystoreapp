@@ -12,18 +12,14 @@
 
 <p>
   <strong>Number of items:</strong>
-  <%= @list.number_of_items %>
+  <%= find_number_of_items %>
 </p>
 
 <p>
   <strong>Price:</strong>
-  <%= @list.price %>
+  <%= find_total_price %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @list.user_id %>
-</p>
 
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <%= link_to 'Back', lists_path %>

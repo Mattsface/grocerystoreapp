@@ -19,6 +19,7 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
+  <!-- comment start -->
   <div class="field">
     <%= f.label :number_of_items %><br>
     <%= f.number_field :number_of_items %>
@@ -27,17 +28,20 @@
     <%= f.label :price %><br>
     <%= f.text_field :price %>
   </div>
+  <!-- comment end -->
   <p><h1> Item Fields </h1>
-  <%= f.fields_for :items, Item.new do |i| %>
+  <% @list.items.each_with_index do |item, index| %>
+  <%= f.fields_for "items[#{index}]", item do |i| %>
     <div class="field">
-      <%= i.label :name %><br>
+      <%= i.label :name %>
       <%= i.text_field :name %>
-
-      <% if i.object.persisted? %>
-      <%= i.check_box :_destroy %>
-      <%= i.label :_destroy, "Destroy" %>
-    <% end %>
+      <%= i.label :price %>
+      <%= i.number_field :price%>
+      <%= i.label :qty %>
+      <%= i.number_field :qty %>
+      <br>
     </div>
+  <% end %>
   <% end %></p>
   <div class="actions">
     <%= f.submit %>

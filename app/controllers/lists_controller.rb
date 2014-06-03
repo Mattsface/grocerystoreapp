@@ -15,7 +15,7 @@ class ListsController < ApplicationController
   # GET /lists/new
   def new
     @list = List.new
-    @list.items.build 
+    5.times { @list.items.build}
   end
 
   # GET /lists/1/edit
@@ -27,7 +27,9 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     @list.user_id = current_user.id
-
+    params[:list][:items].each_value do |item|
+      @list.items.build(item) unless item.values.all?(&:blank?)
+    end
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list, notice: 'List was successfully created.' }
@@ -58,6 +60,7 @@ class ListsController < ApplicationController
   # DELETE /lists/1.json
   def destroy
     @list.destroy
+    @list.items.destroy_all
     respond_to do |format|
       format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
       format.json { head :no_content }
@@ -72,6 +75,6 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:store, :description, :number_of_items, :price, :user_id, items_attributes: [:name])
+      params.require(:list).permit(:store, :description, :number_of_items, :price, :user_id, items_attributes: [:name, :qty, :price])
     end
 end
