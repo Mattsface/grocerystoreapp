@@ -20,6 +20,28 @@
   <%= sprintf('%.2f', find_total_price(@list)) %>
 </p>
 
+<strong>Items:</strong>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% item_list(@list).each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= sprintf('%.2f', item.price) %></td>
+        <td><%= item.qty %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <%= link_to 'Back', lists_path %>
