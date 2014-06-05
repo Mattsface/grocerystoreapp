@@ -20,7 +20,7 @@ This is broken because of this entry in my controller..
     @list = List.new(list_params)
     @list.user_id = current_user.id
 
-  that last line is overriding user_id to 0
+  that last line is overriding user_id to 0, bad design in my part.. 
 
 =end
   before(:each) do
