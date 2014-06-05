@@ -14,7 +14,8 @@ gem 'devise'
 
 gem 'rest-client'
 
-gem 'font-awesome-sass'
+gem "font-awesome-rails"
+
 
 
 group :test, :development do
