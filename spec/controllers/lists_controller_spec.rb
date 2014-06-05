@@ -19,21 +19,35 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ListsController do
+  include Devise::TestHelpers
+  before do
+    @user = User.create! valid_session
+    sign_in @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # List. As you add validations to List, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "store" => "MyString" } }
+  let(:valid_attributes) { { store: "Fred Meyers",
+                             user_id: @user.id
+                              }  }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # ListsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {  name: "Matt",
+                           email: "matt#{(1...1000).to_a.sample}@spah.com",
+                           password: '12345678',
+                           password_confirmation: '12345678',
+                            } }
+
+
+
 
   describe "GET index" do
     it "assigns all lists as @lists" do
-      list = List.create! valid_attributes
-      get :index, {}, valid_session
+      list = List.create! @user
+      get :index, {}, list
       assigns(:lists).should eq([list])
     end
   end
@@ -62,15 +76,17 @@ describe ListsController do
   end
 
   describe "POST create" do
+
+
     describe "with valid params" do
       it "creates a new List" do
         expect {
-          post :create, {:list => valid_attributes}, valid_session
+          post :create, {:list => valid_attributes}
         }.to change(List, :count).by(1)
       end
 
       it "assigns a newly created list as @list" do
-        post :create, {:list => valid_attributes}, valid_session
+        post :create, {:list => valid_attributes}, @user 
         assigns(:list).should be_a(List)
         assigns(:list).should be_persisted
       end
@@ -85,14 +101,14 @@ describe ListsController do
       it "assigns a newly created but unsaved list as @list" do
         # Trigger the behavior that occurs when invalid params are submitted
         List.any_instance.stub(:save).and_return(false)
-        post :create, {:list => { "store" => "invalid value" }}, valid_session
+        post :create, {:list => { "store" => "" }}, valid_session
         assigns(:list).should be_a_new(List)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         List.any_instance.stub(:save).and_return(false)
-        post :create, {:list => { "store" => "invalid value" }}, valid_session
+        post :create, {:list => { "store" => "" }}, @user
         response.should render_template("new")
       end
     end

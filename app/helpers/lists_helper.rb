@@ -4,8 +4,6 @@ module ListsHelper
 		@item_list = Item.where list_id: @list.id
 	end
 
-
-
 	def find_number_of_items(list)
 		@list = list
 		@total = 0
@@ -16,7 +14,6 @@ module ListsHelper
 
 		return @total
 	end
-
 
 	def find_total_price(list)
 		@list = list
