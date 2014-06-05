@@ -1,4 +1,4 @@
-<h1>Listing lists</h1>
+<h1>Grocery Lists!</h1>
 
 <table>
   <thead>
@@ -8,7 +8,7 @@
       <th>Items</th>
       <th>Price</th>
       <th>Created</th>
-      <th colspan="3"></th>
+      <th colspan="10"></th>
     </tr>
   </thead>
 
@@ -29,5 +29,5 @@
 </table>
 
 <br>
-
+<p>You've spent a total of $<%= sprintf('%.2f',  lists_total_price ) %></p>
 <%= link_to 'New List', new_list_path %>

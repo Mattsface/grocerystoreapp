@@ -17,7 +17,7 @@ module ListsHelper
 
 	def find_total_price(list)
 		@list = list
-		@price_total = 0
+		@total = 0
 
 		item_list(@list).each do |x|
 			@total += (x.price * x.qty)
@@ -26,5 +26,17 @@ module ListsHelper
 		return @total
 	end
 
+	def lists_total_price
+		@lists = List.where(user_id:current_user.id)
+
+		return "0.00" if @lists.nil?
+
+		@lists_total = 0
+		@lists.each do |x|
+			@lists_total += find_total_price(x)
+		end
+
+		return @lists_total
+	end
 
 end

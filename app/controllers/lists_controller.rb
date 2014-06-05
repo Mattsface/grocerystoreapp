@@ -15,7 +15,7 @@ class ListsController < ApplicationController
   # GET /lists/new
   def new
     @list = List.new
-    5.times { @list.items.build}
+    20.times { @list.items.build}
   end
 
   # GET /lists/1/edit
@@ -59,8 +59,8 @@ class ListsController < ApplicationController
   # DELETE /lists/1
   # DELETE /lists/1.json
   def destroy
-    @list.destroy
     @list.items.destroy_all
+    @list.destroy
     respond_to do |format|
       format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
       format.json { head :no_content }

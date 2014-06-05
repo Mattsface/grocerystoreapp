@@ -46,7 +46,7 @@ describe ListsController do
 
   describe "GET index" do
     it "assigns all lists as @lists" do
-      list = List.create! @user
+      list = List.create! valid_attributes
       get :index, {}, list
       assigns(:lists).should eq([list])
     end
