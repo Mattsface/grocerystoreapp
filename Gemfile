@@ -14,6 +14,9 @@ gem 'devise'
 
 gem 'rest-client'
 
+gem 'font-awesome-sass'
+
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'capybara'

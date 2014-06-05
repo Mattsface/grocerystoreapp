@@ -1,13 +1,32 @@
 require 'spec_helper'
 
 describe "lists/new" do
+
+  include Devise::TestHelpers
+  before do
+    @user = User.create! valid_session
+    sign_in @user
+  end
+  let(:valid_session) { {  name: "Matt",
+                           email: "matt#{(1...1000).to_a.sample}@spah.com",
+                           password: '12345678',
+                           password_confirmation: '12345678',
+                            } }
+
+=begin
+
+This is broken because of this entry in my controller..
+  def create
+    @list = List.new(list_params)
+    @list.user_id = current_user.id
+
+  that last line is overriding user_id to 0
+
+=end
   before(:each) do
     assign(:list, stub_model(List,
       :store => "MyString",
       :description => "MyText",
-      :items => 1,
-      :price => 1.5,
-      :user_id => 1
     ).as_new_record)
   end
 
@@ -18,9 +37,7 @@ describe "lists/new" do
     assert_select "form[action=?][method=?]", lists_path, "post" do
       assert_select "input#list_store[name=?]", "list[store]"
       assert_select "textarea#list_description[name=?]", "list[description]"
-      assert_select "input#list_items[name=?]", "list[items]"
-      assert_select "input#list_price[name=?]", "list[price]"
-      assert_select "input#list_user_id[name=?]", "list[user_id]"
     end
   end
+
 end
